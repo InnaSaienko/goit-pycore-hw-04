@@ -3,14 +3,12 @@ from pathlib import Path
 
 def total_salary(path):
     total_salary = 0
-    num_developers = 0
     try:
-        with open(path, "r", encoding="utf-8") as employes:
-            for line in employes:
-                name, salary = line.strip().split(',')
+        with open(path, "r", encoding="utf-8") as employees:
+            for count, line in enumerate(employees, start=1):
+                salary = line.strip().split(',')[1]
                 total_salary += float(salary)
-                num_developers += 1
-        return total_salary, round(total_salary / num_developers, 2)
+        return total_salary, round(total_salary / count, 2)
 
     except FileNotFoundError:
         print(f"Error: File with path {path} doesn't exist.")
