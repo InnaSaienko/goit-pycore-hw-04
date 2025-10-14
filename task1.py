@@ -1,5 +1,4 @@
 def total_salary(path):
-    # total_salary = 0
     try:
         with open(path, "r", encoding="utf-8") as employees:
             salaries = [float(line.strip().split(',')[1]) for line in employees]
