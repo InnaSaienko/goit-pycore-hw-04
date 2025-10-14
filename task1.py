@@ -1,9 +1,13 @@
+from functools import reduce
+
+
 def total_salary(path):
     try:
         with open(path, "r", encoding="utf-8") as employees:
-            salaries = [float(line.strip().split(',')[1]) for line in employees]
-            total_salary = sum(salaries)
-        return total_salary, total_salary / len(salaries)
+            salaries = (float(line.strip().split(',')[1]) for line in employees)
+            count, total_salary = reduce(lambda l, r: (r[0], l[1] + r[1]), enumerate(salaries, start=1))
+        return total_salary, total_salary / count
+
 
     except FileNotFoundError:
         print(f"Error: File with path {path} doesn't exist.")
