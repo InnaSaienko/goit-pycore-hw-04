@@ -1,4 +1,5 @@
 from functools import reduce
+from pathlib import Path
 
 
 def total_salary(path):
@@ -17,5 +18,5 @@ def total_salary(path):
 
 
 if __name__ == "__main__":
-    total_salary, average_salary = total_salary("./utils/salary.txt")
+    total_salary, average_salary = total_salary(Path("./utils/salary.txt"))
     print(f"Total salary: {total_salary}, Average salary: {average_salary}")
