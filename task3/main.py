@@ -1,19 +1,17 @@
 import sys
 from pathlib import Path
-from task3 import draw_tree
+from draw_tree import draw_tree
+
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python main.py <directory_path>")
+        print(f"Usage: {sys.argv[0]} <directory_path>")
         return
 
-    root_path_str = sys.argv[1]
-    root_path = Path(root_path_str)
+    root_path = Path(sys.argv[1])
     if not root_path.exists() or not root_path.is_dir():
-        print('Error: invalid path')
+        print("Error: invalid path", file=sys.stderr)
         return
-
-    print(root_path.name + "/")
     draw_tree(root_path)
 
 if __name__ == "__main__":
