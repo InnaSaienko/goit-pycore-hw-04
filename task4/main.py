@@ -5,27 +5,49 @@ def main():
     contacts = {}
     print("Welcome to the assistant bot!")
     while True:
-        user_input = input("Enter a command: ").strip().lower()
-        command, *args = parse_input(user_input)
-        print(f"command: {command}")
+        try:
+            user_input = input("Enter a command: ")
+            command, args = parse_input(user_input)
+        except EOFError:
+            command, args = "exit", []
+        except ValueError:
+            continue
 
+        print(f"command: {command}")
         match command:
             case "close" | "exit":
-                print("Goodbye!")
+                print(f"Goodbye!")
                 break
             case "hello":
-                print("How can I help you?")
+                print(f"How can I help you?")
             case "add":
-                print(add_contact(args, contacts))
+                if len(args) != 2:
+                    print("Invalid command.")
+                    continue
+                add_contact(args, contacts)
+                print("Contact added.")
             case "change":
-                print(change_contact(args, contacts))
+                if len(args) != 2:
+                    print("Invalid command.")
+                    continue
+                msg = "Contact updated." if change_contact(args, contacts) else "Contact not found."
+                print(msg)
             case "phone":
-                print(show_phone(args, contacts))
+                if len(args) != 1:
+                    print("Invalid command.")
+                    continue
+                phone = show_phone(args, contacts)
+                msg = phone if phone else "Contact not found."
+                print(msg)
             case "all":
-                print(show_all(contacts))
+                contacts_str = show_all(contacts)
+                if contacts_str is None:
+                    contacts_str = "No contacts found."
+                print(contacts_str)
             case _:
                 print("Invalid command.")
+    return
+
 
 if __name__ == '__main__':
     main()
-
